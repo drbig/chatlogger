@@ -32,10 +32,18 @@ $(function() {
       console.log(data);
     },
     btnBackward: function () {
+      var fdate = $('#fromPicker').data('DateTimePicker').date();
+      var tdate = $('#toPicker').data('DateTimePicker').date();
       console.log("BACK");
+      $('#fromPicker').data('DateTimePicker').date(fdate.subtract(1, 'days'));
+      $('#toPicker').data('DateTimePicker').date(tdate.subtract(1, 'days'));
     },
     btnForward: function () {
+      var fdate = $('#fromPicker').data('DateTimePicker').date();
+      var tdate = $('#toPicker').data('DateTimePicker').date();
       console.log("FORE");
+      $('#fromPicker').data('DateTimePicker').date(fdate.add(1, 'days'));
+      $('#toPicker').data('DateTimePicker').date(tdate.add(1, 'days'));
     },
     render: function() {
       return (
@@ -51,6 +59,11 @@ $(function() {
             </div>
             <div className='collapse navbar-collapse'>
               <div className='navbar-form'>
+                <button className='btn btn-default' onClick={this.btnInfo}>
+                  <span className='glyphicon glyphicon-question-sign'></span>
+                </button>
+                &nbsp;
+                &nbsp;
                 <div className='form-group'>
                   <div className='input-group'>
                     <div className='input-group-addon'>Channel</div>
@@ -70,7 +83,7 @@ $(function() {
                   </button>
                   <div className='input-group date' id='fromPicker'>
                     <div className='input-group-addon'>From</div>
-                    <input className='form-control' type='text' id='from'>{this.state.from}</input>
+                    <input className='form-control' type='text' id='from' defaultValue={this.state.from}></input>
                     <span className='input-group-addon'>
                       <span className='glyphicon glyphicon-calendar'></span>
                     </span>
@@ -79,7 +92,7 @@ $(function() {
                   &nbsp;
                   <div className='input-group date' id='toPicker'>
                     <div className='input-group-addon'>To</div>
-                    <input className='form-control' type='text' id='to'>{this.state.to}</input>
+                    <input className='form-control' type='text' id='to' defaultValue={this.state.to}></input>
                     <span className='input-group-addon'>
                       <span className='glyphicon glyphicon-calendar'></span>
                     </span>

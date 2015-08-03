@@ -11,11 +11,12 @@ module ChatLogger
       end
 
       def vars(hsh = {})
+        now = Time.now.strftime('%Y-%m-%d')
         vars = {
           channels: settings.channels,
           channel: '',
-          from: '',
-          to: '',
+          from: "#{now} 00:00",
+          to: "#{now} 23:59",
         }.merge(hsh)
         'window.cl_data=JSON.parse(\'' + vars.to_json + '\');'
       end
