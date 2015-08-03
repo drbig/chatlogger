@@ -17,14 +17,14 @@
     %script{src: 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.14.30/js/bootstrap-datetimepicker.min.js'}
     %script{src: 'https://fb.me/react-0.13.1.js'}
     %script{src: 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js'}
-    %script{src: 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/php.min.js'}
+    %script{src: '/js/irc.js'}
     %script{type: 'text/javascript'}!= @vars
     %script{src: '/js/main.js'}
   %body
     #controller
     .container
       %pre
-        %code#content.php= @content
+        %code#content.irc= @content
       %hr
       %small
         Powered by
