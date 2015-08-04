@@ -24,12 +24,10 @@ $(function() {
       });
     },
     btnFetch: function () {
-      var data = {
-        channel:  $('#channel').val(),
-        from:     $('#from').val(),
-        to:       $('#to').val(),
-      };
-      console.log(data);
+      var channel = encodeURIComponent($('#channel').val()),
+          from    = $('#from').val(),
+          to      = $('#to').val();
+      window.open ('/' + channel + '/' + from + '/' + to, '_self', false);
     },
     btnBackward: function () {
       var fdate = $('#fromPicker').data('DateTimePicker').date();

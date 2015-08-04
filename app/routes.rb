@@ -1,5 +1,6 @@
 require 'date'
 require 'stringio'
+require 'uri'
 
 module ChatLogger
   module Routes extend self
@@ -50,6 +51,11 @@ module ChatLogger
         else
           vars[:to] = "#{now} 23:59"
         end
+        from = DateTime.parse(vars[:from])
+        to = DateTime.parse(vars[:to])
+        if (to - from).abs.ceil > 5
+          return {error: 'Maximum timespan is 5 days.'}
+        end
         vars
       end
 
@@ -60,6 +66,12 @@ module ChatLogger
           a = a.slice(0, a.length - 1)
         end
         ''
+      end
+
+      def print_log(out, path)
+        stamp = Date.parse(path.match(/\d{8}/).to_s).strftime('%Y-%m-%d')
+        out.puts "---------> At #{stamp}"
+        out.write(File.read(path))
       end
 
       def log_for(args)
@@ -82,14 +94,11 @@ module ChatLogger
           fname = File.basename(p)
           if in_timespan
             we_done = true if fname.match(/#{to_str}/)
-            out.puts ">>> #{fname}"
-            out.write(File.read(p))
           else
             next unless fname.match(/#{from_str}/)
             in_timespan = true
-            out.puts ">>> #{fname}"
-            out.write(File.read(p))
           end
+          print_log(out, p)
         end
         out.string
       end
@@ -107,7 +116,7 @@ module ChatLogger
       app.get('/:channel') do
         from = Date.today.to_time
         to = from + 23*60*60 + 59*60
-        redirect "/#{params[:channel]}/#{from.strftime(WEBSTAMP_FMT)}/#{to.strftime(WEBSTAMP_FMT)}"
+        redirect "/#{URI.encode(params[:channel])}/#{from.strftime(WEBSTAMP_FMT)}/#{to.strftime(WEBSTAMP_FMT)}"
       end
 
       app.get('/:channel/:from/:to') do
