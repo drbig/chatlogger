@@ -11,6 +11,7 @@ module ChatLogger
   class App < Sinatra::Base
     set :environment, ENV['RACK_ENV'].to_sym
     set :channels,    ENV['CHANNELS'].split(',')
+    set :log_path,    ENV['LOG_PATH']
 
     configure do
       set :root,        ROOT

@@ -1,3 +1,5 @@
+notification :libnotify
+
 guard 'rake', :task => 'assets:css' do
   watch(%r{^app/css/.+$})
 end

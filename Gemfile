@@ -22,4 +22,5 @@ gem 'tzinfo'
 group :development do
   gem 'guard'
   gem 'guard-rake'
+  gem 'libnotify'
 end
