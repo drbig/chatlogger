@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 require 'date'
 require 'stringio'
 require 'uri'
@@ -112,7 +114,7 @@ module ChatLogger
           end
         end
         out.puts 'Nothing found for this timespan.' if out.length == 0
-        out.string
+        out.string.encode('UTF-8', 'binary', invalid: :replace, undef: :replace, replace: '')
       end
     end
 

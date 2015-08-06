@@ -16,7 +16,6 @@ gem 'uglifier'
 gem 'rake'
 gem 'dotenv'
 gem 'json'
-gem 'tzinfo'
 
 # dev stuff
 group :development do

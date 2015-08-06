@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 ROOT = File.expand_path('../', __FILE__)
 $: << ROOT
 
