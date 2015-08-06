@@ -68,38 +68,59 @@ module ChatLogger
         ''
       end
 
-      def print_log(out, path)
-        stamp = Date.parse(path.match(/\d{8}/).to_s).strftime('%Y-%m-%d')
+      def print_log(out, path, skip = false, opts = {})
+        log_date = Date.parse(path.match(/\d{8}/).to_s)
+        stamp = log_date.strftime('%Y-%m-%d')
         out.puts "---------> At #{stamp}"
-        out.write(File.read(path))
+        unless skip
+          out.write(File.read(path))
+        else
+          skip_from = (log_date - opts[:from]).ceil == 0
+          skip_to = (log_date - opts[:to]).ceil == 0
+          from_stamp = opts[:from].strftime('%H:%M')
+          to_stamp = opts[:to].strftime('%H:%M')
+
+          File.open(path).each_line do |line|
+            line_stamp = line.slice(1, 5)
+            if skip_from
+              next unless line_stamp >= from_stamp
+              skip_from = false
+            elsif skip_to
+              break if line_stamp > to_stamp
+            end
+            out.puts line
+          end
+        end
       end
 
       def log_for(args)
-        STDERR.puts ">> #{args[:from]}"
-        STDERR.flush
         from_date = DateTime.parse(args[:from])
         to_date = DateTime.parse(args[:to])
         from_str = from_date.strftime(LOGSTAMP_FMT)
         to_str = to_date.strftime(LOGSTAMP_FMT)
         matcher = "default_#{args[:channel]}_#{common_str(from_str, to_str)}*.log"
-        STDERR.puts ">> #{matcher}"
-        STDERR.flush
-        in_timespan = false
+        in_timespan = from_str == to_str
         we_done = false
         out = StringIO.new
         Dir.glob(File.join(settings.log_path, matcher)).each do |p|
-          STDERR.puts p
-          STDERR.flush
           break if we_done
           fname = File.basename(p)
+          skip = nil
           if in_timespan
             we_done = true if fname.match(/#{to_str}/)
+            skip = true
           else
             next unless fname.match(/#{from_str}/)
             in_timespan = true
+            skip = true
           end
-          print_log(out, p)
+          unless skip
+            print_log(out, p)
+          else
+            print_log(out, p, skip, from: from_date, to: to_date)
+          end
         end
+        out.puts 'Nothing found for this timespan.' if out.length == 0
         out.string
       end
     end
