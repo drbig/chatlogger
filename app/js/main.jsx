@@ -3,6 +3,7 @@ $(function() {
   var maxDays = 5;
 
   var $content = $('#content');
+  var $help = $('#help');
 
   var Controller = React.createClass({
     getInitialState: function() {
@@ -22,6 +23,9 @@ $(function() {
       $('pre code').each(function(i, block) {
         hljs.highlightBlock(block);
       });
+    },
+    btnInfo: function () {
+      $help.toggle('slow');
     },
     btnFetch: function () {
       var channel = encodeURIComponent($('#channel').val()),

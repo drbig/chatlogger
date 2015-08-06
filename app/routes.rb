@@ -8,15 +8,6 @@ module ChatLogger
     WEBSTAMP_FMT = '%Y-%m-%d %H:%M'
 
     module Helpers
-      def ajax_do(&blk)
-        content_type :json
-        begin
-          halt({success: true, data: blk.call}.to_json)
-        rescue StandardError => e
-          halt({success: false, error: e.to_s}.to_json)
-        end
-      end
-
       def vars(hsh = {})
         now = Time.now.strftime('%Y-%m-%d')
         vars = {
