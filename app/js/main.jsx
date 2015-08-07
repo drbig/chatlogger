@@ -59,70 +59,51 @@ $(function() {
     },
     render: function() {
       return (
-        <div className='navbar navbar-inverse navbar-fixed-top' role='navigation'>
-          <div className='container'>
-            <div className='navbar-header'>
-              <button className='navbar-toggle' data-target='.navbar-collapse' data-toggle='collapse' type='button'>
-                <span className='sr-only'>Toggle navigation</span>
-                <span className='icon-bar'></span>
-                <span className='icon-bar'></span>
-                <span className='icon-bar'></span>
-              </button>
+        <div className='navbar-form'>
+          <button className='btn btn-default' onClick={this.btnInfo}>
+            <span className='glyphicon glyphicon-question-sign'></span>
+          </button>
+          &nbsp;
+          &nbsp;
+          <div className='form-group'>
+            <div className='input-group'>
+              <div className='input-group-addon'>Channel</div>
+              <select className='form-control' id='channel' defaultValue={this.state.channel} onChange={this.chgChannel}>
+                {Object(this.state.channels).sort().map(function (channel) {
+                  return (
+                    <option key={channel} value={channel}>{channel}</option>
+                  );
+                }, this)}
+                <option key='' value=''>Select...</option>
+              </select>
             </div>
-            <div className='collapse navbar-collapse'>
-              <div className='navbar-form'>
-                <a className='btn btn-default' href='/'>
-                  <img src='/logo.png' />
-                </a>
-                &nbsp;
-                &nbsp;
-                <button className='btn btn-default' onClick={this.btnInfo}>
-                  <span className='glyphicon glyphicon-question-sign'></span>
-                </button>
-                &nbsp;
-                &nbsp;
-                <div className='form-group'>
-                  <div className='input-group'>
-                    <div className='input-group-addon'>Channel</div>
-                    <select className='form-control' id='channel' defaultValue={this.state.channel} onChange={this.chgChannel}>
-                      {Object(this.state.channels).sort().map(function (channel) {
-                        return (
-                          <option key={channel} value={channel}>{channel}</option>
-                        );
-                      }, this)}
-                      <option key='' value=''>Select...</option>
-                    </select>
-                  </div>
-                  &nbsp;
-                  &nbsp;
-                  <button className='btn btn-default' onClick={this.btnBackward}>
-                    <span className='glyphicon glyphicon-backward'></span>
-                  </button>
-                  <div className='input-group date' id='fromPicker'>
-                    <div className='input-group-addon'>From</div>
-                    <input className='form-control' type='text' id='from' defaultValue={this.state.from}></input>
-                    <span className='input-group-addon'>
-                      <span className='glyphicon glyphicon-calendar'></span>
-                    </span>
-                  </div>
-                  &nbsp;
-                  &nbsp;
-                  <div className='input-group date' id='toPicker'>
-                    <div className='input-group-addon'>To</div>
-                    <input className='form-control' type='text' id='to' defaultValue={this.state.to}></input>
-                    <span className='input-group-addon'>
-                      <span className='glyphicon glyphicon-calendar'></span>
-                    </span>
-                  </div>
-                  <button className='btn btn-default' onClick={this.btnForward}>
-                    <span className='glyphicon glyphicon-forward'></span>
-                  </button>
-                  &nbsp;
-                  &nbsp;
-                  <button className='btn btn-success' onClick={this.btnFetch}>Fetch</button>
-                </div>
-              </div>
+            &nbsp;
+            &nbsp;
+            <button className='btn btn-default' onClick={this.btnBackward}>
+              <span className='glyphicon glyphicon-backward'></span>
+            </button>
+            <div className='input-group date' id='fromPicker'>
+              <div className='input-group-addon'>From</div>
+              <input className='form-control' type='text' id='from' defaultValue={this.state.from}></input>
+              <span className='input-group-addon'>
+                <span className='glyphicon glyphicon-calendar'></span>
+              </span>
             </div>
+            &nbsp;
+            &nbsp;
+            <div className='input-group date' id='toPicker'>
+              <div className='input-group-addon'>To</div>
+              <input className='form-control' type='text' id='to' defaultValue={this.state.to}></input>
+              <span className='input-group-addon'>
+                <span className='glyphicon glyphicon-calendar'></span>
+              </span>
+            </div>
+            <button className='btn btn-default' onClick={this.btnForward}>
+              <span className='glyphicon glyphicon-forward'></span>
+            </button>
+            &nbsp;
+            &nbsp;
+            <button className='btn btn-success' onClick={this.btnFetch}>Fetch</button>
           </div>
         </div>
       );
