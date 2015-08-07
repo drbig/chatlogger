@@ -37,7 +37,7 @@ module ChatLogger
           vars[:from] = "#{now} 00:00"
         end
         if to = params[:to]
-          unless from.match(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}/)
+          unless to.match(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}/)
             return {error: 'Garbled to date.'}
           end
           vars[:to] = to
