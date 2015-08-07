@@ -31,6 +31,9 @@ $(function() {
       var channel = encodeURIComponent($('#channel').val()),
           from    = $('#from').val(),
           to      = $('#to').val();
+      if (channel == '') {
+        return;
+      }
       window.open ('/' + channel + '/' + from + '/' + to, '_self', false);
     },
     btnBackward: function () {

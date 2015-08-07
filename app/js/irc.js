@@ -15,7 +15,7 @@ hljs.registerLanguage('irc', function(hljs) {
       },
       {
         cN: 'number',
-        b: '\\[',
+        b: /^\[/,
         e: '\\]',
       },
       {
@@ -29,7 +29,7 @@ hljs.registerLanguage('irc', function(hljs) {
         e: /$/
       },
       {
-        cN: 'request',
+        cN: 'number',
         b: '---------\>',
         e: /$/
       }
