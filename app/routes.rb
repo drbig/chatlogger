@@ -153,6 +153,10 @@ module ChatLogger
         haml :front
       end
 
+      app.get('/favicon.ico') do
+        halt 404
+      end
+
       app.get('/:channel') do
         from = Date.today.to_time
         to = from + 23*60*60 + 59*60
