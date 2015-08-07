@@ -71,6 +71,11 @@ $(function() {
             </div>
             <div className='collapse navbar-collapse'>
               <div className='navbar-form'>
+                <a className='btn btn-default' href='/'>
+                  <img src='/logo.png' />
+                </a>
+                &nbsp;
+                &nbsp;
                 <button className='btn btn-default' onClick={this.btnInfo}>
                   <span className='glyphicon glyphicon-question-sign'></span>
                 </button>
