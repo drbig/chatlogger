@@ -32,6 +32,8 @@ $(function() {
           from    = $('#from').val(),
           to      = $('#to').val();
       if (channel == '') {
+        $('#channel').addClass('text-danger');
+        $('#channel').effect("highlight", 500);
         return;
       }
       window.open ('/' + channel + '/' + from + '/' + to, '_self', false);
@@ -49,6 +51,11 @@ $(function() {
       console.log("FORE");
       $('#fromPicker').data('DateTimePicker').date(fdate.add(1, 'days'));
       $('#toPicker').data('DateTimePicker').date(tdate.add(1, 'days'));
+    },
+    chgChannel: function (e) {
+      if (e.target.value != '') {
+        $('#channel').removeClass('text-danger');
+      }
     },
     render: function() {
       return (
@@ -72,7 +79,7 @@ $(function() {
                 <div className='form-group'>
                   <div className='input-group'>
                     <div className='input-group-addon'>Channel</div>
-                    <select className='form-control' id='channel' defaultValue={this.state.channel}>
+                    <select className='form-control' id='channel' defaultValue={this.state.channel} onChange={this.chgChannel}>
                       {Object(this.state.channels).sort().map(function (channel) {
                         return (
                           <option key={channel} value={channel}>{channel}</option>
