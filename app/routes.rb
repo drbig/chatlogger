@@ -10,6 +10,10 @@ module ChatLogger
     WEBSTAMP_FMT = '%Y-%m-%d %H:%M'
 
     module Helpers
+      @@cache = Hash.new
+      @@keys = Array.new
+      @@mtx = Mutex.new
+
       def vars(hsh = {})
         now = Time.now.strftime('%Y-%m-%d')
         vars = {
@@ -113,8 +117,30 @@ module ChatLogger
             print_log(out, p, skip, from: from_date, to: to_date)
           end
         end
-        out.puts 'Nothing found for this timespan.' if out.length == 0
         out.string.encode('UTF-8', 'binary', invalid: :replace, undef: :replace, replace: '')
+      end
+
+      def cached_or_new_for(args)
+        key = request.path
+        @@mtx.synchronize do
+          if @@cache.has_key? key
+            @@keys.delete(key)
+            @@keys.unshift(key)
+            return @@cache[key]
+          end
+
+          content = log_for(args)
+          return 'Nothing found for this timespan.' if content.length == 0
+
+          if @@cache.length >= settings.cache_size
+            last = @@keys.last
+            @@cache.delete(last)
+            @@keys.delete(last)
+          end
+
+          @@keys.unshift(key)
+          @@cache[key] = content
+        end
       end
     end
 
@@ -139,7 +165,7 @@ module ChatLogger
         if args.has_key? :error
           @content = args[:error]
         else
-          @content = log_for(args)
+          @content = cached_or_new_for(args)
         end
         haml :front
       end

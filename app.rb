@@ -14,6 +14,7 @@ module ChatLogger
     set :environment, ENV['RACK_ENV'].to_sym
     set :channels,    ENV['CHANNELS'].split(',')
     set :log_path,    ENV['LOG_PATH']
+    set :cache_size,  ENV['CACHE_SIZE'].to_i
 
     configure do
       set :root,        ROOT
