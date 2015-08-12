@@ -12,16 +12,18 @@ The above results in two unique features: plaintext log files are filtered on-de
 
 Things that probably should be in but are not (yet):
 
- - Don't cache today (as the log file is still growing, obviously)
+ - ~~Don't cache today (as the log file is still growing, obviously)~~
  - Make log format somewhat less hard-coded. It assumes default [ZNC](http://wiki.znc.in/ZNC) log format
  - Turn links into actual links (maybe)
  - Also filter by nicks (more likely)
  - Also filter just messages (e.g. no joins, quits etc.; maybe)
  - Colorize individual nicks (meh)
 
-*Status*: Consider beta. It works but is not polished.
+**Status**: Consider beta. It works but is not polished.
 
 ![ChatLogger in action](http://i.imgur.com/MCOfkkM.png)
+
+You can checkout current instance [here](http://tools.cataclysmdda.com/irc-logs).
 
 ## Setup
 
