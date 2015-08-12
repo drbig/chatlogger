@@ -129,8 +129,10 @@ module ChatLogger
             return @@cache[key]
           end
 
+          now = Time.now.strftime('%Y-%m-%d %H:%M')
           content = log_for(args)
           return 'Nothing found for this timespan.' if content.length == 0
+          return content if args[:to] > now
 
           if @@cache.length >= settings.cache_size
             last = @@keys.last
